@@ -1,0 +1,504 @@
+#!/usr/bin/env python -m kivy
+# -*- coding: utf-8 -*-
+
+# content.kv: "FluxCat GUI using kivy for simulation of poisoning / degradation for catalytic fixed beds"
+
+# Author: "Markus Schindler"
+# Copyright: "Copyright 2025"
+
+# License: "MIT License"
+# Version: "0.1.0"
+# Maintainer: "Markus Schindler"
+# Email: "schindlerdrmarkus@gmail.com"
+# Status: "Development"
+
+##########################
+# Preamble - Definitions #
+##########################
+<Button>:
+    font_size: 13
+    color: 1, 1, 1, 1
+    background_color: {'normal': (0.3, 0.3, 0.3, 1), 'down': (0.27, 0.51, 0.71, 1)} [self.state]
+
+<Label>:
+    font_size: 17
+    size_hint: 0.1, 0.05
+    color: 1, 1, 1, 1
+
+<TextInput>:
+    font_size: 15
+    color: 0.7, 0.7, 0.7, 1
+    size_hint: 0.1, 0.05
+    halign: "center"
+    valign: "middle"
+    multiline: False
+    input_type: 'number'
+
+<ToggleButton>:
+    font_size : 13
+    size_hint : 0.1, 0.03
+    halign: "center"
+    valign: "middle"
+    color: 1, 1, 1, 1
+    background_color: {'normal': (0.3, 0.3, 0.3, 1), 'down': (0.27, 0.51, 0.71, 1)} [self.state]
+
+<FailurePopup@Popup>:
+    size_hint: None, None
+    size: 400, 300
+    title: 'Calculation Failed!'
+    separator_color: 0.3, 0.3, 0.3, 1
+    title_align: 'center'
+
+    FloatLayout:
+        spacing: 10
+        padding: 10
+        Label:
+            text: 'Please Change Input Parameters!'
+            size_hint: 0.3, 0.15
+            pos_hint: {'x':0.35, 'y':0.6}
+
+        Button:
+            markup: True
+            text: '[b]Close[/b]'
+            size_hint: 0.5, 0.25
+            pos_hint: {'x':0.25, 'y':0.21}
+            on_release: root.dismiss()
+
+<Designtool>:
+    ##################
+    # Section Header #
+    ##################
+    padding: 10
+    spacing: 10
+    canvas.before:
+        Color:
+            rgba: 0.37, 0.37, 0.37, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+            source: "network.png"
+    
+    #############################
+    # Variables for Temperature #
+    #############################
+    feed_temperature_input: feed_temperature_input_id
+    feed_celsius_toggle: feed_celsius_toggle_id
+    feed_fahrenheit_toggle: feed_fahrenheit_toggle_id
+    feed_kelvin_toggle: feed_kelvin_toggle_id
+
+    ###############################
+    # Variables for Fluid Density #
+    ###############################
+    feed_density_input: feed_density_input_id
+    feed_kilogrampercubicmeter_toggle: feed_kilogrampercubicmeter_toggle_id
+    feed_kilogramperliter_toggle: feed_kilogramperliter_toggle_id
+    feed_poundpercubicfeet_toggle: feed_poundpercubicfeet_toggle_id
+
+    ##############################
+    # Variables for Poison Level #
+    ##############################
+    feed_level_input: feed_level_input_id
+    feed_ppm_toggle: feed_ppm_toggle_id
+    feed_milligramperliter_toggle: feed_milligramperliter_toggle_id
+    feed_percent_toggle: feed_percent_toggle_id
+    
+    ########################
+    # Variables for Outlet #
+    ########################
+    feed_outlet_input: feed_outlet_input_id
+    feed_ppm_toggle2: feed_ppm_toggle2_id
+    feed_milligramperliter_toggle2: feed_milligramperliter_toggle2_id
+    feed_percent_toggle2: feed_percent_toggle2_id
+
+    ######################
+    # Variables for Flow #
+    ######################
+    process_flow_input: process_flow_input_id
+    process_kilogramperhour_toggle: process_kilogramperhour_toggle_id
+    process_literpermin_toggle: process_literpermin_toggle_id
+    process_poundperhour_toggle: process_poundperhour_toggle_id
+
+    ##########################
+    # Variables for Diameter #
+    ##########################
+    process_diameter_input: process_diameter_input_id
+    process_meter_toggle: process_meter_toggle_id
+    process_feet_toggle: process_feet_toggle_id
+    process_inch_toggle: process_inch_toggle_id
+
+    ########################
+    # Variables for Length #
+    ########################
+    process_length_input: process_length_input_id
+    process_meter_toggle2: process_meter_toggle2_id
+    process_feet_toggle2: process_feet_toggle2_id
+    process_inch_toggle2: process_inch_toggle2_id
+
+    ##############################
+    # Variables for Bulk Density #
+    ##############################
+    process_density_input: process_density_input_id
+    process_kilogrampercubicmeter_toggle: process_kilogrampercubicmeter_toggle_id
+    process_kilogramperliter_toggle: process_kilogramperliter_toggle_id
+    process_poundpercubicfeet_toggle: process_poundpercubicfeet_toggle_id
+
+    #####################################
+    # Variables for Bed Characteristics #
+    #####################################
+    bed_void_fraction: bed_void_fraction_id
+    bed_bodenstein: bed_bodenstein_id
+    bed_film_diffusion: bed_film_diffusion_id
+    bed_capacity: bed_capacity_id
+
+    ####################
+    # Output Variables #
+    ####################
+    time_duration_hour: time_duration_hour_id
+    time_duration_day: time_duration_day_id
+    time_duration_month: time_duration_month_id
+
+    ################
+    # Section Main #
+    ################
+    Label:
+        markup: True
+        text: '[b]FluxCat BED DESIGN | Catalyst Poisoning / Degradation[/b]'
+        font_size: 27
+        size_hint: 1.0, 0.1 
+        pos_hint: {'center_x': 0.5, 'y': 0.9}
+
+    Label:
+        text: 'v. 0.1.0'
+        font_size: 17
+        size_hint: 0.1, 0.05
+        pos_hint: {'x': 0.9, 'y': 0.95}
+
+    Label:
+        text: "This simulator is only provided for demonstration purposes. The user assumes all risk associated with this simulation tool.\nCopyright 2025; M. Schindler"
+        halign: "center"
+        font_size: 13
+        size_hint: 0.7, 0.1
+        pos_hint: {'center_x': 0.5, 'y': 0.0}
+
+    ################################################
+    # Section input table for feedstock properties #
+    ################################################
+    Label:
+        text: 'Feedstock Properties'
+        font_size: 20
+        size_hint: 0.3, 0.05
+        pos_hint: {'x': 0.11, 'y': 0.85}
+            
+    Label:
+        text: 'Temperature'
+        pos_hint: {'x': 0.03, 'y': 0.8}
+    
+    TextInput: 
+        id: feed_temperature_input_id
+        text: "50"
+        pos_hint: {'x': 0.03, 'y': 0.75}
+
+    ToggleButton:
+        id: feed_celsius_toggle_id
+        group: 'temp_units'
+        text: '° C'
+        pos_hint: {'x': 0.03, 'y': 0.7}
+        state: 'down'
+        
+    ToggleButton:
+        id: feed_fahrenheit_toggle_id
+        group: 'temp_units'
+        text: '° F'
+        pos_hint: {'x': 0.03, 'y': 0.67}
+
+    ToggleButton:
+        id: feed_kelvin_toggle_id
+        group: 'temp_units'
+        text: 'K'
+        pos_hint: {'x': 0.03, 'y': 0.64}
+
+    Label:
+        text: 'Density'
+        pos_hint: {'x': 0.15, 'y': 0.8}
+    
+    TextInput: 
+        id: feed_density_input_id
+        text: "150"
+        pos_hint: {'x': 0.15, 'y': 0.75}
+
+    ToggleButton:
+        id: feed_kilogrampercubicmeter_toggle_id
+        group: 'density_units'
+        markup : True
+        text: 'kg / m[sup]3[/sup]'
+        pos_hint: {'x': 0.15, 'y': 0.7}
+        state: 'down'
+
+    ToggleButton:
+        id: feed_kilogramperliter_toggle_id
+        group: 'density_units'
+        text: 'kg / l'
+        pos_hint: {'x': 0.15, 'y': 0.67}
+
+    ToggleButton:
+        id: feed_poundpercubicfeet_toggle_id
+        group: 'density_units'
+        markup : True
+        text: 'lb / ft[sup]3[/sup]'
+        pos_hint: {'x': 0.15, 'y': 0.64}
+
+    Label:
+        text: 'Poison Level'
+        pos_hint: {'x': 0.27, 'y': 0.8}
+    
+    TextInput: 
+        id: feed_level_input_id        
+        text: "250"
+        pos_hint: {'x': 0.27, 'y': 0.75}
+
+    ToggleButton:
+        id: feed_ppm_toggle_id
+        group: 'cont_units'
+        text: 'ppm'
+        pos_hint: {'x': 0.27, 'y': 0.7}
+        state: 'down'
+
+    ToggleButton:
+        id: feed_milligramperliter_toggle_id
+        group: 'cont_units'
+        text: 'mg / l'
+        pos_hint: {'x': 0.27, 'y': 0.67}
+
+    ToggleButton:
+        id: feed_percent_toggle_id
+        group: 'cont_units'
+        text: 'wt.%'
+        pos_hint: {'x': 0.27, 'y': 0.64}
+
+    Label:
+        text: 'max. Outlet'
+        pos_hint: {'x': 0.39, 'y': 0.8}
+    
+    TextInput: 
+        id: feed_outlet_input_id        
+        text: "125"
+        pos_hint: {'x': 0.39, 'y': 0.75}
+
+    ToggleButton:
+        id: feed_ppm_toggle2_id
+        group: 'cont_units2'
+        text: 'ppm'
+        pos_hint: {'x': 0.39, 'y': 0.7}
+        state: 'down'
+
+    ToggleButton:
+        id: feed_milligramperliter_toggle2_id
+        group: 'cont_units2'
+        text: 'mg / l'
+        pos_hint: {'x': 0.39, 'y': 0.67}
+
+    ToggleButton:
+        id: feed_percent_toggle2_id
+        group: 'cont_units2'
+        text: 'wt.%'
+        pos_hint: {'x': 0.39, 'y': 0.64}
+
+    ##################################################
+    # Section input table for operational parameters #
+    ##################################################
+    Label:
+        text: 'Operational Parameters'
+        font_size: 20
+        size_hint: 0.3, 0.05
+        pos_hint: {'x': 0.11, 'y': 0.5}
+
+    Label:
+        text: 'Flow Rate'
+        pos_hint: {'x': 0.03, 'y': 0.45}
+    
+    TextInput: 
+        id: process_flow_input_id
+        text: "300"
+        pos_hint: {'x': 0.03, 'y': 0.4}
+
+    ToggleButton:
+        id: process_kilogramperhour_toggle_id
+        group: 'flow_units'
+        text: 'kg / h'
+        pos_hint: {'x': 0.03, 'y': 0.35}
+        state: 'down'
+
+    ToggleButton:
+        id: process_literpermin_toggle_id
+        group: 'flow_units'
+        text: 'l / min'
+        pos_hint: {'x': 0.03, 'y': 0.32}
+
+    ToggleButton:
+        id: process_poundperhour_toggle_id
+        group: 'flow_units'
+        text: 'lb / h'
+        pos_hint: {'x': 0.03, 'y': 0.29}
+
+    Label:
+        text: 'Diameter'
+        pos_hint: {'x': 0.15, 'y': 0.45}
+    
+    TextInput: 
+        id: process_diameter_input_id
+        text: "0.3"
+        pos_hint: {'x': 0.15, 'y': 0.4}
+
+    ToggleButton:
+        id: process_meter_toggle_id
+        group: 'size_units'
+        text: 'm'
+        pos_hint: {'x': 0.15, 'y': 0.35}
+        state: 'down'
+
+    ToggleButton:
+        id: process_feet_toggle_id
+        group: 'size_units'
+        text: 'ft'
+        pos_hint: {'x': 0.15, 'y': 0.32}
+
+    ToggleButton:
+        id: process_inch_toggle_id
+        group: 'size_units'
+        text: 'in'
+        pos_hint: {'x': 0.15, 'y': 0.29}
+
+    Label:
+        text: 'Length'
+        pos_hint: {'x': 0.27, 'y': 0.45}
+
+    TextInput:
+        id: process_length_input_id
+        text: "1.5"
+        pos_hint: {'x': 0.27, 'y': 0.4}
+
+    ToggleButton:
+        id: process_meter_toggle2_id
+        group: 'size_units2'
+        text: 'm'
+        pos_hint: {'x': 0.27, 'y': 0.35}
+        state: 'down'
+
+    ToggleButton:
+        id: process_feet_toggle2_id
+        group: 'size_units2'
+        text: 'ft'
+        pos_hint: {'x': 0.27, 'y': 0.32}
+
+    ToggleButton:
+        id: process_inch_toggle2_id
+        group: 'size_units2'
+        text: 'in'
+        pos_hint: {'x': 0.27, 'y': 0.29}
+
+    Label:
+        text: 'Bulk Density'
+        pos_hint: {'x': 0.39, 'y': 0.45}
+
+    TextInput:
+        id: process_density_input_id
+        text: "370"
+        pos_hint: {'x': 0.39, 'y': 0.4}
+
+    ToggleButton:
+        id: process_kilogrampercubicmeter_toggle_id
+        group: 'density_units2'
+        markup: True
+        text: 'kg / m[sup]3[/sup]'
+        pos_hint: {'x': 0.39, 'y': 0.35}
+        state: 'down'
+
+    ToggleButton:
+        id: process_kilogramperliter_toggle_id
+        group: 'density_units2'
+        text: 'kg / l'
+        pos_hint: {'x': 0.39, 'y': 0.32}
+
+    ToggleButton:
+        id: process_poundpercubicfeet_toggle_id
+        group: 'density_units2'
+        markup : True
+        text: 'lb / ft[sup]3[/sup]'
+        pos_hint: {'x': 0.39, 'y': 0.29}
+
+    ##########################################
+    # Section input table for bed parameters #
+    ##########################################
+
+    Label:
+        text: 'Fixed Bed Parameters'
+        font_size: 20
+        size_hint: 0.3, 0.05
+        pos_hint: {'x': 0.6, 'y': 0.85} 
+
+    Label:
+        text: 'Bed Void Fraction'
+        pos_hint: {'x': 0.62, 'y': 0.75}
+
+    TextInput:
+        id: bed_void_fraction_id
+        text: '0.37'
+        pos_hint: {'x': 0.78, 'y': 0.75}
+
+    Label:
+        text: 'Bodenstein Number'
+        pos_hint: {'x': 0.62, 'y': 0.7}
+
+    TextInput:
+        id: bed_bodenstein_id
+        text: '10'
+        pos_hint: {'x': 0.78, 'y': 0.7}
+
+    Label:
+        text: 'Film Diffusion'
+        pos_hint: {'x': 0.62, 'y': 0.65}
+
+    TextInput:
+        id: bed_film_diffusion_id
+        text: '10'
+        pos_hint: {'x': 0.78, 'y': 0.65}
+
+    Label:
+        text: 'Total Capacity in mg / mg'
+        pos_hint: {'x': 0.62, 'y': 0.6}
+
+    TextInput:
+        id: bed_capacity_id
+        text: '0.37'
+        pos_hint: {'x': 0.78, 'y': 0.6}
+
+    Button:
+        markup: True
+        text: '[b]Calculate[/b]'
+        size_hint: 0.3, 0.1
+        pos_hint: {'x': 0.35, 'y': 0.13}
+        on_press: root.calculate()
+  
+    ##################################################
+    # Section output table for simulation parameters #
+    ##################################################
+    Label:
+        text: 'Time on Stream'
+        font_size: 20
+        size_hint: 0.3, 0.05    
+        pos_hint: {'x': 0.6, 'y': 0.5}
+
+    Label:
+        id: time_duration_hour_id
+        text: '--- h'
+        pos_hint: {'x': 0.7, 'y': 0.4}
+  
+    Label:
+        id: time_duration_day_id
+        text: '--- d'
+        pos_hint: {'x': 0.7, 'y': 0.35}
+
+    Label:
+        id: time_duration_month_id
+        text: '--- mo'
+        pos_hint: {'x': 0.7, 'y': 0.3}
