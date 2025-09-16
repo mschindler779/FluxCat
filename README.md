@@ -92,14 +92,14 @@ The GUI window will appear. If you see a “Kivy not found” error, make sure t
 
 ## File Structure
 
-├──FluxCat.py **Main Kivy application**<br/>
-├──FVSorption.py **Core model implementation (PDE solver)**<br/>
-├──content.kv **Kivy layout file**<br/>
-├──network.png **GUI’s background**<br/>
-├──solution.png	**Pre-computed general sample breakthrough curve**<br/>
-├──requirements.txt	**Python dependencies**<br/>
-├──README.md **This file**<br/>
-└──LICENSE **MIT license**
+├── FluxCat.py **Main Kivy application**<br/>
+├── FVSorption.py **Core model implementation (PDE solver)**<br/>
+├── content.kv **Kivy layout file**<br/>
+├── network.png **GUI’s background**<br/>
+├── solution.png	**Pre-computed general sample breakthrough curve**<br/>
+├── requirements.txt	**Python dependencies**<br/>
+├── README.md **This file**<br/>
+└── LICENSE **MIT license**
 
 **Kivy Documentation** – https://kivy.org
 
