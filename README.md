@@ -48,7 +48,7 @@ Catalyst deactivation in fixed bed reactors is a complex, multi‑step process. 
 * python 3.8 – 3.13
 * pip (Python package manager)
  
-### Execute Clone the repo:
+### Clone the repo:
 ```
 git clone https://github.com/mschindler779/FluxCat.git
 cd FluxCat
