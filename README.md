@@ -7,7 +7,7 @@
 The model is based on the mass balance from the DeVault partial differential equation and extended with axial dispersion and a Langmuir adsorption isotherm. It is a **demonstration tool** – not a production‑grade simulator – but it reproduces the key physics that appear in the literature (Bohart‑Adams, Wheeler‑Jonas, etc.) and allows you to see how the various parameters influence the breakthrough curve and the catalyst life.
 Catalyst deactivation is a major bottleneck in many petrochemical processes. Experimental data are scarce and the literature is full of simplified models that ignore intraparticle diffusion or the effect of axial dispersion. FluxCat implements a more complete, yet still tractable, description that can be used for teaching, quick‑look studies, or as a starting point for more detailed modelling.
 
-## Table of Contents
+## Table of contents
 
 * Description and background
 * Literature context and model motivation
@@ -39,36 +39,36 @@ Catalyst deactivation in fixed bed reactors is a complex, multi‑step process. 
 
 * **Parameter toggle buttons** | Reaction temperature, fluid density, poison level, outlet level, bed geometry, diffusion coefficients, etc.
 
-* ** Different units can be handled. The simulator directly calculates the estimated time to achieve the maximum outlet concentration of the poisoning compound.
+* Different units can be handled. The simulator directly calculates the estimated time to achieve the maximum outlet concentration of the poisoning compound.
 
 ## Installation
 
 ### Prerequisites
 
 * python 3.8 – 3.13
-*  pip (Python package manager)
-
+* pip (Python package manager)
+ 
 * Clone the repo:
-'''
- git clone https://github.com/mschindler779/FluxCat.git\
+```
+git clone https://github.com/mschindler779/FluxCat.git
 cd FluxCat
-'''
+```
 
 * Create a virtual environment (optional but recommended)
-'''
+```
 python -m venv /path/to/new/virtual/environment
 source /path/to/new/virtual/environment/bin/activate
-'''
+```
 
 * Install dependencies
-'''
+```
 python -m pip install -r requirements.txt
-'''
+```
 
 ## Usage. Running the GUI
-'''
+```
 python FluxCat.py
-'''    
+```    
 The GUI window will appear. If you see a “Kivy not found” error, make sure the virtual environment is activated and that Kivy is installed correctly.
 
 * Set parameters using the toggle buttons and numeric entry fields.
@@ -86,21 +86,26 @@ The GUI window will appear. If you see a “Kivy not found” error, make sure t
 * Bodenstein Number – Controls axial dispersion.
 
 * Film Diffusion Coefficient – Usually negligible for low‑pressure, low‑surface‑area systems.
-* Total Capacity** – Maximum uptake of the chemisorbed species.
+* Total Capacity – Maximum uptake of the chemisorbed species.
 * Run the simulation by pressing the **“Calculate”** button.
 * View the estimated performance time until catalyst degrades.
 
 ## File Structure
-├──FluxCat.py		# Main Kivy application
-├──FVSorption.py	# Core model implementation (PDE solver)
-├──content.kv		# Kivy layout file
-├──network.png		# GUI’s background
-├──solution.png		# Pre-computed general sample breakthrough curve
-├──requirements.txt	# Python dependencies
-├──README.md        # This file
-└──LICENSE          # MIT license
+
+├──FluxCat.py		**Main Kivy application**\n
+├──FVSorption.py	**Core model implementation (PDE solver)**\n
+├──content.kv		**Kivy layout file**\n
+├──network.png		**GUI’s background**\n
+├──solution.png		**Pre-computed general sample breakthrough curve**\n
+├──requirements.txt	**Python dependencies**\n
+├──README.md        **This file**\n
+└──LICENSE          **MIT license**
 
 **Kivy Documentation** – https://kivy.org
 
 ## License
-MIT © 2025 Markus Schindler
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+© 2025 Markus Schindler
+
