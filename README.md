@@ -48,27 +48,30 @@ Catalyst deactivation in fixed bed reactors is a complex, multi‑step process. 
 * python 3.8 – 3.13
 * pip (Python package manager)
  
-* Clone the repo:
+### Execute Clone the repo:
 ```
 git clone https://github.com/mschindler779/FluxCat.git
 cd FluxCat
 ```
 
-* Create a virtual environment (optional but recommended)
+### Create a virtual environment (optional but recommended)
 ```
 python -m venv /path/to/new/virtual/environment
 source /path/to/new/virtual/environment/bin/activate
 ```
 
-* Install dependencies
+### Install dependencies
 ```
 python -m pip install -r requirements.txt
 ```
 
-## Usage. Running the GUI
+## Usage
+
+### Running the GUI
 ```
 python FluxCat.py
 ```    
+
 The GUI window will appear. If you see a “Kivy not found” error, make sure the virtual environment is activated and that Kivy is installed correctly.
 
 * Set parameters using the toggle buttons and numeric entry fields.
