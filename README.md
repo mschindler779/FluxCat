@@ -1,3 +1,5 @@
+![plot](solution.png)
+
 # FluxCat
 
 ## Catalyst‑Poisoning Simulator for Fixed Bed Reactors
